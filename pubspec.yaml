@@ -19,12 +19,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  err: ^0.6.0
   livemap:
     path: ../livemap
   geopoint_sql:
     path: ../geopoint_sql
-  err:
-    path: ../err
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
