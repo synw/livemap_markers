@@ -13,30 +13,21 @@ class MarkersCluster {
       @required this.markersController,
       @required this.clusteredZoomLevel,
       @required this.clusterMarkerPosition}) {
-    _previousZoom = liveMapController.zoom;
     _isClustered = liveMapController.zoom < clusteredZoomLevel;
     liveMapController.changeFeed.listen((change) {
       if (change.name == "zoom") {
-        // rebuild the markers only if the change is needed and big enough
-        num diff = _previousZoom - change.value;
-        //print("ZOOM DIFF: $diff ($_previousZoom , ${change.value}");
-        if ((diff < -0.9 || diff > 0.9)) {
-          switch (_isClustered) {
-            case true:
-              if (change.value < clusteredZoomLevel) {
-                return;
-              }
-              break;
-            case false:
-              if (change.value > clusteredZoomLevel) {
-                return;
-              }
-          }
+        // rebuild the markers only if needed
+        switch (_isClustered) {
+          case true:
+            if (change.value < clusteredZoomLevel) return;
+            break;
+          case false:
+            if (change.value > clusteredZoomLevel) return;
+
           //print(
           //    "CLUSTER ZOOM rebuild from cluster $name : ${change.value} / $diff");
-          build(change.value);
-          _previousZoom += diff;
         }
+        build(change.value);
       }
     });
   }
@@ -50,7 +41,6 @@ class MarkersCluster {
 
   bool _isInitialized = false;
   var _onMap = <GeoMarker>[];
-  double _previousZoom;
   bool _isClustered;
 
   init() async {
