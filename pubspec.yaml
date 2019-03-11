@@ -19,7 +19,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  err: ^0.6.0
+  err: 
+    path: ../err
   livemap:
     path: ../livemap
   geopoint_sql:
