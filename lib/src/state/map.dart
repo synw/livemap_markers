@@ -26,6 +26,7 @@ class MarkersMapState {
       mk[m.name] = m.buildMarker();
       _visibleGeoMarkers[m.name] = m;
     });
+    //print("ADD MANY MARKERS");
     liveMapController.addMarkers(markers: mk);
   }
 
@@ -39,6 +40,7 @@ class MarkersMapState {
 
   Future<void> addToMap({@required GeoMarker geoMarker}) async {
     Marker marker = geoMarker.subMarker.buildMarker();
+    //print("ADD MARKER");
     await liveMapController.addMarker(name: geoMarker.name, marker: marker);
     _visibleGeoMarkers[geoMarker.name] = geoMarker;
   }

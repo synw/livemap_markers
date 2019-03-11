@@ -19,7 +19,16 @@ class CrudMarker implements GeoMarkerContract {
       this.geoPoint,
       this.point});
 
-  void save() async {
+  final Db database;
+  final String name;
+  final MarkersController markersController;
+  LatLng point;
+  bool isPoped;
+  GeoPoint geoPoint;
+
+  GeoMarkerType get type => GeoMarkerType.crud;
+
+  Future<void> save() async {
     geoPoint = await sql
         .saveGeoPoint(
             verbose: true,
@@ -27,20 +36,8 @@ class CrudMarker implements GeoMarkerContract {
             geoPoint: GeoPoint.fromLatLng(name: name, point: point))
         .catchError((e) {
       log.errorErr(msg: "Can not save marker", err: e);
-    }).then((gp) {
-      geoPoint = gp;
     });
   }
-
-  final Db database;
-  final String name;
-  final MarkersController markersController;
-  LatLng point;
-  bool isPoped;
-  GeoPoint geoPoint;
-  bool isSaved = false;
-
-  GeoMarkerType get type => GeoMarkerType.crud;
 
   Marker buildMarker() {
     return Marker(
@@ -71,8 +68,7 @@ class CrudMarker implements GeoMarkerContract {
                 onPressed: () async {
                   if (geoPoint == null) {
                     log.error(
-                        "Trying to delete geoMarker: the geoPoint is null",
-                        context);
+                        "Trying to delete geoMarker: the id is null", context);
                     return;
                   }
                   markersController.removeFromMap(name: name);
@@ -80,7 +76,7 @@ class CrudMarker implements GeoMarkerContract {
                       .delete(table: "geopoint", where: "id=${geoPoint.id}")
                       .catchError((e) {
                     log.errorErr(
-                        msg: "Can not delete geoMarler",
+                        msg: "Can not delete geoMarker",
                         err: e,
                         context: context);
                   });
