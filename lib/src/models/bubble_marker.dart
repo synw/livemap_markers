@@ -49,7 +49,7 @@ class BubbleMarker implements GeoMarkerContract {
               ),
               onTap: () => onTap(context),
             ),
-            onTap: onTap,
+            onTap: (_) => markersController.togglePop(name: name),
           );
         });
   }

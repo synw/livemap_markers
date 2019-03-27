@@ -25,7 +25,7 @@ class WidgetMarker implements GeoMarkerContract {
   final WidgetBuilder markerWidgetBuilder;
   final MarkersController markersController;
 
-  GeoMarkerType get type => GeoMarkerType.icon;
+  GeoMarkerType get type => GeoMarkerType.widget;
 
   Marker buildMarker() {
     return Marker(

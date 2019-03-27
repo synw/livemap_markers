@@ -35,7 +35,7 @@ class CrudMarker implements GeoMarkerContract {
             database: database,
             geoPoint: GeoPoint.fromLatLng(name: name, point: point))
         .catchError((e) {
-      log.errorErr(msg: "Can not save marker", err: e);
+      log.error("Can not save marker", err: e);
     });
   }
 
@@ -67,18 +67,17 @@ class CrudMarker implements GeoMarkerContract {
                 ),
                 onPressed: () async {
                   if (geoPoint == null) {
-                    log.error(
-                        "Trying to delete geoMarker: the id is null", context);
+                    log.errorScreen(
+                        "Trying to delete geoMarker: the id is null",
+                        context: context);
                     return;
                   }
                   markersController.removeFromMap(name: name);
                   await database
                       .delete(table: "geopoint", where: "id=${geoPoint.id}")
                       .catchError((e) {
-                    log.errorErr(
-                        msg: "Can not delete geoMarker",
-                        err: e,
-                        context: context);
+                    log.errorScreen("Can not delete geoMarker",
+                        err: e, context: context);
                   });
                 },
               ),

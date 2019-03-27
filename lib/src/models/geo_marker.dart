@@ -36,7 +36,7 @@ class GeoMarker {
       this.width,
       this.height,
       this.onTap}) {
-    onTap = onTap ?? (_) => null;
+    onTap ??= (_) => null;
     if ((type == GeoMarkerType.pop) && popWidget == null)
       throw ArgumentError.notNull("GeoMarker: a pop widget is required");
     if ((type == GeoMarkerType.crud) && database == null)
@@ -62,9 +62,7 @@ class GeoMarker {
             markersController: markersController,
             isPoped: isPoped,
             popWidget: popWidget,
-            onTap: (_) {
-              markersController.togglePop(name: name);
-            });
+            onTap: onTap);
         break;
       case GeoMarkerType.pop:
         subMarker = PopMarker(
